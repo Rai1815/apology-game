@@ -1,48 +1,48 @@
 // Quiz Questions
 const questions = [
     {
-        question: "What's the best thing about having a friend like you?",
+        question: "What do I find the best about you, according to you?",
         answers: [
-            { text: "They actually listen to me", points: 10 },
-            { text: "They make me laugh even on bad days", points: 10 },
-            { text: "They're always there when it matters", points: 10 },
-            { text: "All of the above!", points: 20 }
+            { text: "You listen to my weird things", points: 10 },
+            { text: "You can make my day better", points: 10 },
+            { text: "Always there to listen to me", points: 10 },
+            { text: "Help me be emotionally open without the fear of getting judged", points: 20 }
         ]
     },
     {
-        question: "When I messed up, what should I have done?",
+        question: "When I mess up, what should I do to make up for it?",
         answers: [
-            { text: "Owned up to it immediately", points: 15 },
-            { text: "Actually listened to your side", points: 15 },
-            { text: "Apologized without excuses", points: 15 },
-            { text: "All of these honestly", points: 25 }
+            { text: "Apologize immediately", points: 15 },
+            { text: "Listen to what you think about it", points: 15 },
+            { text: "Admit my mistake and try to be better next time", points: 15 },
+            { text: "Honestly say everything clear", points: 25 }
         ]
     },
     {
         question: "How would you describe our friendship?",
         answers: [
-            { text: "Pretty solid, one mistake won't break it", points: 20 },
-            { text: "Strong enough to weather a few storms", points: 20 },
-            { text: "Worth fighting for", points: 20 },
-            { text: "All of the above (you're getting good at this!)", points: 30 }
+            { text: "Pretty solid one silly joke and mistake won't break it", points: 20 },
+            { text: "Two suicidal teens", points: 20 },
+            { text: "Enough to handle disagreements", points: 20 },
+            { text: "Better than any friendship you can find online (you're getting good at this!)", points: 30 }
         ]
     },
     {
-        question: "What do you want me to do differently?",
+        question: "Do you like the way it is right now? or want me to improve anything",
         answers: [
-            { text: "Be more thoughtful with your words", points: 15 },
-            { text: "Actually consider my feelings", points: 15 },
-            { text: "Communicate better when things go wrong", points: 15 },
-            { text: "Everything mentioned here", points: 25 }
+            { text: "Be more thoughtful with with my replies", points: 15 },
+            { text: "Listen to your feelings and text according to your mood", points: 15 },
+            { text: "Try to understand you better", points: 15 },
+            { text: "Just be my natural self", points: 25 }
         ]
     },
     {
-        question: "Deep down, are we actually okay?",
+        question: "Deep down are you actually okay?",
         answers: [
-            { text: "Yeah, I just needed you to recognize it", points: 25 },
-            { text: "We will be if you mean it", points: 25 },
-            { text: "I hope so, that's why I'm playing this", points: 20 },
-            { text: "Let me finish this game first", points: 20 }
+            { text: "Yeah,I am doing just fine", points: 15 },
+            { text: "Dont ask me (okay..)", points: 5 },
+            { text: "I hope so, I just need time alone(understandable no worries)", points: 20 },
+            { text: "Want me to annoy you every day to make it better?", points: 25 }
         ]
     }
 ];
@@ -117,27 +117,27 @@ function showResults() {
 
     if (score >= 120) {
         result = {
-            emoji: '🌟',
+            emoji: '😉',
             title: 'You\'re Amazing!',
-            message: `You got ${score} points! Wow, you really understand me. I promise to do better and never take you for granted.`
+            message: `You got ${score} points! You nailed it didn't you. Congrats now tell me in dms what do you want as a gift for the highest score`
         };
     } else if (score >= 100) {
         result = {
-            emoji: '😊',
+            emoji: '🙂',
             title: 'Pretty Good!',
-            message: `You got ${score} points! You know me well. I appreciate your patience and I genuinely want to make things right.`
+            message: `You got ${score} points! Ah, Almost got it. But still it was a great attempt dw`
         };
     } else if (score >= 80) {
         result = {
-            emoji: '🤔',
+            emoji: '😶',
             title: 'Not Bad!',
-            message: `You got ${score} points! Looks like we both need to communicate better. Let's work on this together.`
+            message: `You got ${score} points! Looks like we both need to text even more, to understand each other`
         };
     } else {
         result = {
-            emoji: '😅',
+            emoji: '🤔',
             title: 'Okay, I Deserved That!',
-            message: `You got ${score} points! Yeah... I really messed up didn't I? But I'm here now and I actually care about fixing this.`
+            message: `You got ${score} points! Yeah.. I really messed up didn't I? But I'm here now and I actually care about fixing it.`
         };
     }
 
@@ -146,7 +146,7 @@ function showResults() {
     resultMessage.textContent = result.message;
     
     // Add your custom message here
-    customMessageBox.innerHTML = '✨ <em>A special message from your friend is waiting below...</em> ✨';
+    customMessageBox.innerHTML = '✨ <em>I sometimes get scared that you are starting to get bored of me. If you someday actually do just let me know I'll try something new ig? Also I'm not serious all the time so dont take my joke seriously. I can never be rude to people whom I'm comfortable with. It lowkey feels like I did a crime or something 😭</em> ✨';
 }
 
 // Handle Forgiveness Response
@@ -162,15 +162,15 @@ function handleForgiveness(response) {
 
     if (response === 'yes') {
         finalMessage = {
-            emoji: '💚',
+            emoji: '❤',
             title: 'YES! 🎉',
-            message: 'Thank you so much! I promise I\'ll do better. You mean the world to me and I\'m grateful you gave me another chance. Let\'s make this right!'
+            message: 'Tysm, I'll try my best to be the best person you've ever met'
         };
     } else if (response === 'maybe') {
         finalMessage = {
             emoji: '🤝',
-            title: 'I\'ll Earn It',
-            message: 'I understand. I won\'t rush you. I\'ll show you through my actions that I genuinely care and that this won\'t happen again. You deserve better.'
+            title: 'I\'ll work up for it dw',
+            message: 'I understand. I wont pressure you with things and let you have your time alone sometimes because everybody needs a personal space at the end of the day. Nothing to be feel bad about'
         };
     } else {
         finalMessage = {
