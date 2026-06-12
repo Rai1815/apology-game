@@ -4,7 +4,305 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Am I Still in the Doghouse?</title>
-    <link rel="stylesheet" href="style.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .screen {
+            display: none;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .screen.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .intro-content {
+            padding: 60px 40px;
+            text-align: center;
+        }
+
+        .intro-content h1 {
+            font-size: 2.5em;
+            color: #667eea;
+            margin-bottom: 30px;
+            animation: bounce 1s ease-in-out;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .intro-text {
+            font-size: 1.1em;
+            color: #555;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .quiz-content {
+            padding: 40px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #f0f0f0;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .question-number {
+            color: #999;
+            font-size: 0.9em;
+            margin-bottom: 15px;
+        }
+
+        #questionText {
+            color: #333;
+            font-size: 1.5em;
+            margin-bottom: 30px;
+            line-height: 1.4;
+        }
+
+        .answers-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+
+        .answer-btn {
+            padding: 15px 20px;
+            border: 2px solid #ddd;
+            background: white;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: all 0.3s ease;
+            text-align: left;
+        }
+
+        .answer-btn:hover {
+            border-color: #667eea;
+            background: #f9f9f9;
+            transform: translateX(5px);
+        }
+
+        .answer-btn.selected {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        .score-display {
+            text-align: center;
+            padding: 15px;
+            background: #f9f9f9;
+            border-radius: 10px;
+            color: #667eea;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+        .results-content {
+            padding: 60px 40px;
+            text-align: center;
+        }
+
+        .result-emoji {
+            font-size: 4em;
+            margin-bottom: 20px;
+            animation: float 2s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        #resultTitle {
+            color: #667eea;
+            font-size: 2em;
+            margin-bottom: 15px;
+        }
+
+        .result-message {
+            color: #555;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .custom-message-box {
+            background: #f0f7ff;
+            padding: 20px;
+            border-left: 4px solid #667eea;
+            margin: 30px 0;
+            border-radius: 8px;
+            color: #333;
+            font-size: 1em;
+            line-height: 1.6;
+            font-style: italic;
+        }
+
+        .forgiveness-question {
+            margin: 40px 0;
+            padding: 30px;
+            background: #fff9f0;
+            border-radius: 15px;
+        }
+
+        .big-text {
+            font-size: 1.3em;
+            color: #333;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .button-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            width: 100%;
+            padding: 15px 24px;
+            font-size: 1.1em;
+        }
+
+        .btn-primary:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #f0f0f0;
+            color: #333;
+            width: 100%;
+            padding: 12px 24px;
+        }
+
+        .btn-yes {
+            background: #4caf50;
+            color: white;
+            width: 100%;
+        }
+
+        .btn-maybe {
+            background: #ff9800;
+            color: white;
+            width: 100%;
+        }
+
+        .btn-no {
+            background: #f44336;
+            color: white;
+            width: 100%;
+        }
+
+        .response-content {
+            padding: 60px 40px;
+            text-align: center;
+        }
+
+        .response-emoji {
+            font-size: 4em;
+            margin-bottom: 20px;
+            animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        #responseTitle {
+            color: #667eea;
+            font-size: 2em;
+            margin-bottom: 15px;
+        }
+
+        .response-message {
+            color: #555;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 600px) {
+            .intro-content, .quiz-content, .results-content, .response-content {
+                padding: 40px 20px;
+            }
+
+            .intro-content h1 {
+                font-size: 2em;
+            }
+
+            #resultTitle, #responseTitle {
+                font-size: 1.5em;
+            }
+
+            .result-emoji, .response-emoji {
+                font-size: 3em;
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -65,6 +363,211 @@
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+        // Quiz Questions
+        const questions = [
+            {
+                question: "What do I find the best about you, according to you?",
+                answers: [
+                    { text: "You listen to my weird things", points: 10 },
+                    { text: "You can make my day better", points: 10 },
+                    { text: "Always there to listen to me", points: 10 },
+                    { text: "Help me be emotionally open without the fear of getting judged", points: 20 }
+                ]
+            },
+            {
+                question: "When I mess up, what should I do to make up for it?",
+                answers: [
+                    { text: "Apologize immediately", points: 15 },
+                    { text: "Listen to what you think about it", points: 15 },
+                    { text: "Admit my mistake and try to be better next time", points: 15 },
+                    { text: "Honestly say everything clear", points: 25 }
+                ]
+            },
+            {
+                question: "How would you describe our friendship?",
+                answers: [
+                    { text: "Pretty solid one silly joke and mistake won't break it", points: 20 },
+                    { text: "Two suicidal teens", points: 20 },
+                    { text: "Enough to handle disagreements", points: 20 },
+                    { text: "Better than any friendship you can find online (you're getting good at this!)", points: 30 }
+                ]
+            },
+            {
+                question: "Do you like the way it is right now? or want me to improve anything",
+                answers: [
+                    { text: "Be more thoughtful with with my replies", points: 15 },
+                    { text: "Listen to your feelings and text according to your mood", points: 15 },
+                    { text: "Try to understand you better", points: 15 },
+                    { text: "Just be my natural self", points: 25 }
+                ]
+            },
+            {
+                question: "Deep down are you actually okay?",
+                answers: [
+                    { text: "Yeah,I am doing just fine", points: 15 },
+                    { text: "Dont ask me (okay..)", points: 5 },
+                    { text: "I hope so, I just need time alone(understandable no worries)", points: 20 },
+                    { text: "Want me to annoy you every day to make it better?", points: 25 }
+                ]
+            }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+
+        // Start Game
+        function startGame() {
+            currentQuestion = 0;
+            score = 0;
+            hideScreen('introScreen');
+            showScreen('quizScreen');
+            displayQuestion();
+        }
+
+        // Display Question
+        function displayQuestion() {
+            const question = questions[currentQuestion];
+            const questionText = document.getElementById('questionText');
+            const answersContainer = document.getElementById('answersContainer');
+            const questionNum = document.getElementById('questionNum');
+            const progressFill = document.getElementById('progressFill');
+
+            questionText.textContent = question.question;
+            questionNum.textContent = currentQuestion + 1;
+            answersContainer.innerHTML = '';
+
+            const progress = ((currentQuestion + 1) / questions.length) * 100;
+            progressFill.style.width = progress + '%';
+
+            question.answers.forEach((answer, index) => {
+                const button = document.createElement('button');
+                button.className = 'answer-btn';
+                button.textContent = answer.text;
+                button.onclick = () => selectAnswer(answer, button);
+                answersContainer.appendChild(button);
+            });
+        }
+
+        // Select Answer
+        function selectAnswer(answer, button) {
+            const buttons = document.querySelectorAll('.answer-btn');
+            buttons.forEach(btn => btn.disabled = true);
+
+            button.classList.add('selected');
+            score += answer.points;
+            document.getElementById('currentScore').textContent = score;
+
+            setTimeout(() => {
+                if (currentQuestion < questions.length - 1) {
+                    currentQuestion++;
+                    displayQuestion();
+                } else {
+                    showResults();
+                }
+            }, 800);
+        }
+
+        // Show Results
+        function showResults() {
+            hideScreen('quizScreen');
+            showScreen('resultsScreen');
+
+            const resultEmoji = document.getElementById('resultEmoji');
+            const resultTitle = document.getElementById('resultTitle');
+            const resultMessage = document.getElementById('resultMessage');
+            const customMessageBox = document.getElementById('customMessageBox');
+
+            let result = {};
+
+            if (score >= 120) {
+                result = {
+                    emoji: '😉',
+                    title: 'You\'re Amazing!',
+                    message: `You got ${score} points! You nailed it didn't you. Congrats now tell me in dms what do you want as a gift for the highest score`
+                };
+            } else if (score >= 100) {
+                result = {
+                    emoji: '🙂',
+                    title: 'Pretty Good!',
+                    message: `You got ${score} points! Ah, Almost got it. But still it was a great attempt dw`
+                };
+            } else if (score >= 80) {
+                result = {
+                    emoji: '😶',
+                    title: 'Not Bad!',
+                    message: `You got ${score} points! Looks like we both need to text even more, to understand each other`
+                };
+            } else {
+                result = {
+                    emoji: '🤔',
+                    title: 'Okay, I Deserved That!',
+                    message: `You got ${score} points! Yeah.. I really messed up didn't I? But I'm here now and I actually care about fixing it.`
+                };
+            }
+
+            resultEmoji.textContent = result.emoji;
+            resultTitle.textContent = result.title;
+            resultMessage.textContent = result.message;
+            
+            customMessageBox.innerHTML = '✨ <em>I sometimes get scared that you are starting to get bored of me. If you someday actually do just let me know I\'ll try something new ig? Also I\'m not serious about the gift thing lol, you already made my day by playing this :) ✨';
+        }
+
+        // Handle Forgiveness Response
+        function handleForgiveness(response) {
+            hideScreen('resultsScreen');
+            showScreen('responseScreen');
+
+            const responseEmoji = document.getElementById('responseEmoji');
+            const responseTitle = document.getElementById('responseTitle');
+            const responseMessage = document.getElementById('responseMessage');
+
+            let finalMessage = {};
+
+            if (response === 'yes') {
+                finalMessage = {
+                    emoji: '❤',
+                    title: 'YES! 🎉',
+                    message: 'Tysm, I\'ll try my best to be the best person you\'ve ever met'
+                };
+            } else if (response === 'maybe') {
+                finalMessage = {
+                    emoji: '🤝',
+                    title: 'I\'ll work up for it dw',
+                    message: 'I understand. I won\'t pressure you with things and let you have your time alone sometimes because everybody needs a personal space at the end of the day. Nothing to be feel bad about im okay with it <3'
+                };
+            } else {
+                finalMessage = {
+                    emoji: '😔',
+                    title: 'I Know, I Know...',
+                    message: 'You have every right to be mad. I won\'t make excuses. But please know I\'m truly sorry and I\'m ready to work on being a better friend to you.'
+                };
+            }
+
+            responseEmoji.textContent = finalMessage.emoji;
+            responseTitle.textContent = finalMessage.title;
+            responseMessage.textContent = finalMessage.message;
+        }
+
+        // Reset Game
+        function resetGame() {
+            currentQuestion = 0;
+            score = 0;
+            document.getElementById('currentScore').textContent = '0';
+            hideScreen('responseScreen');
+            hideScreen('resultsScreen');
+            hideScreen('quizScreen');
+            showScreen('introScreen');
+        }
+
+        // Screen Navigation
+        function hideScreen(screenId) {
+            document.getElementById(screenId).classList.remove('active');
+        }
+
+        function showScreen(screenId) {
+            document.getElementById(screenId).classList.add('active');
+        }
+    </script>
 </body>
 </html>
